@@ -34,6 +34,7 @@ export default function SigninScreen({ navigation }) {
             login({
               username: data.user.username,
               token: data.user.token,
+              email: data.user.email,
             })
           );
           navigation.navigate("Welcome");
