@@ -6,6 +6,7 @@ import HomeScreen from "./screens/HomeScreen";
 import SigninScreen from "./screens/SigninScreen";
 import SignupScreen from "./screens/SignupScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
+import MaJourneeScreen from "./screens/MaJourneeScreen";
 
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
@@ -26,6 +27,7 @@ export default function App() {
           <Stack.Screen name="Signin" component={SigninScreen} />
           <Stack.Screen name="Signup" component={SignupScreen} />
           <Stack.Screen name="Welcome" component={WelcomeScreen} />
+          <Stack.Screen name="Majournee" component={MaJourneeScreen} />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>

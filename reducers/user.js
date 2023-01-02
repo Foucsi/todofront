@@ -6,6 +6,7 @@ const initialState = {
     token: null,
     password: null,
     email: null,
+    todo: [],
   },
 };
 
@@ -19,8 +20,11 @@ export const userSlice = createSlice({
       state.value.password = action.payload.password;
       state.value.email = action.payload.email;
     },
+    addTodo: (state, action) => {
+      state.value.todo.push(action.payload.todo);
+    },
   },
 });
 
-export const { login } = userSlice.actions;
+export const { login, addTodo } = userSlice.actions;
 export default userSlice.reducer;
