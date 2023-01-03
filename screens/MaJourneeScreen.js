@@ -19,6 +19,7 @@ import { addTodo, removeTodo } from "../reducers/user";
 
 export default function MaJourneeScreen({ navigation }) {
   const [listTask, setListTask] = useState([]);
+  const [colorStar, setColorStar] = useState(false);
   const [input, setInput] = useState("");
   const dispatch = useDispatch();
   const users = useSelector((state) => state.user.value);
@@ -59,13 +60,32 @@ export default function MaJourneeScreen({ navigation }) {
       });
   }, [input]); // [input] indique que l'effet doit être exécuté chaque fois que la valeur de input change
 
+  const handleFavorites = (task) => {
+    fetch(`http://${fetchIp.myIp}:3000/favorites/addFavorites/${users.token}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ favorites: task }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          setColorStar(!colorStar);
+          console.log(task);
+        }
+      });
+  };
+
   const listing = listTask.map((e, index) => {
     return (
       <View key={index} style={styles.task}>
         <Text>{e.todo}</Text>
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity>
-            <AntDesign name="staro" size={24} color="black" />
+          <TouchableOpacity onPress={() => handleFavorites(e.todo)}>
+            <AntDesign
+              name="staro"
+              size={24}
+              color={colorStar ? "tomato" : "black"}
+            />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleRemove(e)}>
             <AntDesign name="delete" size={24} color="black" />
