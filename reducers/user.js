@@ -23,8 +23,14 @@ export const userSlice = createSlice({
     addTodo: (state, action) => {
       state.value.todo.push(action.payload.todo);
     },
+    removeTodo: (state, action) => {
+      state.value.todo = state.value.todo.filter((e) => e !== action.payload);
+    },
+    removeAll: (state) => {
+      state.value.todo = [];
+    },
   },
 });
 
-export const { login, addTodo } = userSlice.actions;
+export const { login, addTodo, removeTodo, removeAll } = userSlice.actions;
 export default userSlice.reducer;
