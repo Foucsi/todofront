@@ -3,9 +3,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
+import { logout } from "../reducers/user";
+import { useDispatch } from "react-redux";
 
-export default function Header({ username, email }) {
+export default function Header({ username, email, navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <TouchableOpacity
@@ -64,6 +67,26 @@ export default function Header({ username, email }) {
               </View>
               <Text style={{ color: "#fff", fontSize: 24 }}>{username}</Text>
               <Text style={{ color: "#fff", fontSize: 20 }}>{email}</Text>
+            </View>
+            <View
+              style={{
+                height: 600,
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "flex-end",
+                paddingBottom: 20,
+              }}
+            >
+              <TouchableOpacity
+                onPress={() => {
+                  dispatch(logout());
+                  navigation.navigate("Home");
+                }}
+              >
+                <Text style={{ fontSize: 22, color: "#5465FF" }}>
+                  Se deconnecter
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>

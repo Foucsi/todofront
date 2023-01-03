@@ -165,6 +165,7 @@ export default function MaJourneeScreen({ navigation }) {
                 borderBottomWidth: 1,
                 fontSize: 24,
                 color: "#fff",
+                width: "80%",
               }}
               placeholder="Ajouter une tache"
               placeholderTextColor="grey"

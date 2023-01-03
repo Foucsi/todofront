@@ -19,11 +19,11 @@ export default function WelcomeScreen({ navigation }) {
       .then((data) => {
         setNumberTask(data.data);
       });
-  }, []);
+  }, [users.todo]);
 
   return (
     <View style={styles.container}>
-      <Header username={username} email={email} />
+      <Header username={username} email={email} navigation={navigation} />
       <View
         style={{
           height: "85%",

@@ -29,8 +29,13 @@ export const userSlice = createSlice({
     removeAll: (state) => {
       state.value.todo = [];
     },
+    logout: (state) => {
+      state.value.username = null;
+      state.value.email = null;
+    },
   },
 });
 
-export const { login, addTodo, removeTodo, removeAll } = userSlice.actions;
+export const { login, addTodo, removeTodo, removeAll, logout } =
+  userSlice.actions;
 export default userSlice.reducer;
