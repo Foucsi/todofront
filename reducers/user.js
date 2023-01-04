@@ -7,6 +7,7 @@ const initialState = {
     password: null,
     email: null,
     todo: [],
+    favorites: [],
   },
 };
 
@@ -33,9 +34,12 @@ export const userSlice = createSlice({
       state.value.username = null;
       state.value.email = null;
     },
+    addFavorites: (state, action) => {
+      state.value.favorites.push(action.payload.favorites);
+    },
   },
 });
 
-export const { login, addTodo, removeTodo, removeAll, logout } =
+export const { login, addTodo, removeTodo, removeAll, logout, addFavorites } =
   userSlice.actions;
 export default userSlice.reducer;

@@ -15,7 +15,7 @@ import fetchIp from "../fecthIp.json";
 import { useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { addTodo, removeTodo } from "../reducers/user";
+import { addTodo, removeTodo, addFavorites } from "../reducers/user";
 
 export default function MaJourneeScreen({ navigation }) {
   const [listTask, setListTask] = useState([]);
@@ -71,6 +71,7 @@ export default function MaJourneeScreen({ navigation }) {
         if (data.result) {
           setColorStar(!colorStar);
           console.log(task);
+          dispatch(addFavorites({ favorites: input }));
         }
       });
   };
@@ -105,6 +106,7 @@ export default function MaJourneeScreen({ navigation }) {
         .then((res) => res.json())
         .then((data) => {
           if (data.result) {
+            // setListTask([{ todo: input }, ...listTask]);
             setListTask([...listTask, { todo: input }]);
             //onfait une copie du tableau listTask pour pouvoir ensuite le modifier
             setInput("");
