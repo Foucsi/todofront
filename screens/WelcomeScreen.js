@@ -65,6 +65,7 @@ export default function WelcomeScreen({ navigation }) {
           <Text style={{ color: "#fff" }}>{numberTask}</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => navigation.navigate("Important")}
           style={{
             width: "100%",
             flexDirection: "row",
