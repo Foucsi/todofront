@@ -1,2 +1,2 @@
-- pouvoir se deconnecter
-- ajouter des tache en tache importante
+- Enregistrement de la photo en BDD
+- Récuperation de la photo du user coté front
