@@ -14,12 +14,24 @@ import { useState } from "react";
 import { logout, addPhoto } from "../reducers/user";
 import { useDispatch } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
+import fetchIp from "../fecthIp.json";
+import { useEffect } from "react";
 
 export default function Header({ username, email, navigation }) {
   const users = useSelector((state) => state.user.value);
   const [image, setImage] = useState(users.photo);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetch(`http://${fetchIp.myIp}:3000/users/photo/${users.token}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.result) {
+          setImage(data.data);
+        }
+      });
+  }, [image]);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -30,9 +42,16 @@ export default function Header({ username, email, navigation }) {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
+      fetch(`http://${fetchIp.myIp}:3000/users/addPhoto/${users.token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ photo: result.assets[0].uri }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.result);
+        });
       setImage(result.assets[0].uri);
       dispatch(addPhoto(result.assets[0].uri));
     }
@@ -108,12 +127,15 @@ export default function Header({ username, email, navigation }) {
               }}
             >
               <TouchableOpacity
+                style={{ paddingBottom: 30 }}
                 onPress={() => {
                   dispatch(logout());
                   navigation.navigate("Home");
                 }}
               >
-                <Text style={{ fontSize: 22, color: "#5465FF" }}>
+                <Text
+                  style={{ fontSize: 22, color: "#5465FF", paddingBottom: 20 }}
+                >
                   Se deconnecter
                 </Text>
               </TouchableOpacity>

@@ -11,12 +11,14 @@ import { useState } from "react";
 import fecthIp from "../fecthIp.json";
 import { useDispatch } from "react-redux";
 import { login } from "../reducers/user";
+import { useSelector } from "react-redux";
 
 export default function SignupScreen({ navigation }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState("");
+  const users = useSelector((state) => state.user.value);
 
   const dispatch = useDispatch();
 
@@ -28,6 +30,8 @@ export default function SignupScreen({ navigation }) {
         username: username,
         email: email,
         password: password,
+        photo:
+          "https://media.istockphoto.com/id/1300845620/fr/vectoriel/appartement-dic%C3%B4ne-dutilisateur-isol%C3%A9-sur-le-fond-blanc-symbole-utilisateur.jpg?b=1&s=170667a&w=0&k=20&c=HEO2nP4_uEAn0_JzVTU6_Y5hyn-qHxyCrWWTirBvScs=",
       }),
     })
       .then((res) => res.json())
@@ -38,6 +42,7 @@ export default function SignupScreen({ navigation }) {
               username: data.user.username,
               email: data.user.email,
               token: data.user.token,
+              photo: data.user.photo,
             })
           );
           navigation.navigate("Welcome");
