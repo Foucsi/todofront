@@ -8,6 +8,8 @@ const initialState = {
     email: null,
     todo: [],
     favorites: [],
+    photo:
+      "https://media.istockphoto.com/id/1300845620/fr/vectoriel/appartement-dic%C3%B4ne-dutilisateur-isol%C3%A9-sur-le-fond-blanc-symbole-utilisateur.jpg?b=1&s=170667a&w=0&k=20&c=HEO2nP4_uEAn0_JzVTU6_Y5hyn-qHxyCrWWTirBvScs=",
   },
 };
 
@@ -37,9 +39,19 @@ export const userSlice = createSlice({
     addFavorites: (state, action) => {
       state.value.favorites.push(action.payload.favorites);
     },
+    addPhoto: (state, action) => {
+      state.value.photo = action.payload;
+    },
   },
 });
 
-export const { login, addTodo, removeTodo, removeAll, logout, addFavorites } =
-  userSlice.actions;
+export const {
+  login,
+  addTodo,
+  removeTodo,
+  removeAll,
+  logout,
+  addFavorites,
+  addPhoto,
+} = userSlice.actions;
 export default userSlice.reducer;

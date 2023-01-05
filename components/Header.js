@@ -1,14 +1,42 @@
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Image,
+  Button,
+} from "react-native";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Feather } from "@expo/vector-icons";
 import { useState } from "react";
-import { logout } from "../reducers/user";
+import { logout, addPhoto } from "../reducers/user";
 import { useDispatch } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
 
 export default function Header({ username, email, navigation }) {
+  const users = useSelector((state) => state.user.value);
+  const [image, setImage] = useState(users.photo);
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
+      dispatch(addPhoto(result.assets[0].uri));
+    }
+  };
 
   return (
     <TouchableOpacity
@@ -43,28 +71,30 @@ export default function Header({ username, email, navigation }) {
             </View>
             <View
               style={{
-                height: 200,
+                height: 250,
                 alignItems: "center",
                 width: "100%",
                 justifyContent: "space-around",
+                paddingTop: 20,
               }}
             >
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 100, height: 100, borderRadius: "50%" }}
+                />
+              )}
+
               <View
                 style={{
-                  height: 100,
-                  width: 100,
-                  backgroundColor: "grey",
-                  borderRadius: "50%",
+                  flex: 1,
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Text
-                  style={{ fontSize: 32, color: "#fff", fontWeight: "bold" }}
-                >
-                  {username[0]}
-                </Text>
+                <Button title="Upload" onPress={pickImage} />
               </View>
+
               <Text style={{ color: "#fff", fontSize: 24 }}>{username}</Text>
               <Text style={{ color: "#fff", fontSize: 20 }}>{email}</Text>
             </View>
@@ -107,9 +137,19 @@ export default function Header({ username, email, navigation }) {
           }}
         >
           <View style={styles.user}>
-            <Text style={{ fontSize: 24, color: "#fff" }}>{username[0]}</Text>
+            <Image
+              source={{ uri: image }}
+              style={{ width: 50, height: 50, borderRadius: "50%" }}
+            />
           </View>
-          <Text style={{ color: "#fff", fontSize: 22, fontWeight: "bold" }}>
+          <Text
+            style={{
+              color: "#fff",
+              fontSize: 22,
+              fontWeight: "bold",
+              paddingLeft: 20,
+            }}
+          >
             {username}
           </Text>
         </View>
