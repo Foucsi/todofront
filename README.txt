@@ -1,2 +1,2 @@
-- Enregistrement de la photo en BDD
-- Récuperation de la photo du user coté front
+- a la suppression de la todo, 
+celle-ci doit egalement etre supprimé des favorites

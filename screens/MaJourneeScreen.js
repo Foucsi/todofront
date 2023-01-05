@@ -15,7 +15,12 @@ import fetchIp from "../fecthIp.json";
 import { useSelector } from "react-redux";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch } from "react-redux";
-import { addTodo, removeTodo, addFavorites } from "../reducers/user";
+import {
+  addTodo,
+  removeTodo,
+  addFavorites,
+  removeFavorites,
+} from "../reducers/user";
 
 export default function MaJourneeScreen({ navigation }) {
   const [listTask, setListTask] = useState([]);
@@ -128,6 +133,19 @@ export default function MaJourneeScreen({ navigation }) {
           setListTask(listTask.filter((task) => task !== e));
           dispatch(removeTodo(e.todo));
         }
+      });
+    fetch(
+      `http://${fetchIp.myIp}:3000/favorites/removeFavorites/${users.token}`,
+      {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ favorites: e.todo }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.result);
+        dispatch(removeFavorites(e.todo));
       });
   };
 

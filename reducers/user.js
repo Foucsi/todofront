@@ -29,6 +29,11 @@ export const userSlice = createSlice({
     removeTodo: (state, action) => {
       state.value.todo = state.value.todo.filter((e) => e !== action.payload);
     },
+    removeFavorites: (state, action) => {
+      state.value.favorites = state.value.favorites.filter(
+        (e) => e !== action.payload
+      );
+    },
     removeAll: (state) => {
       state.value.todo = [];
     },
@@ -56,5 +61,6 @@ export const {
   logout,
   addFavorites,
   addPhoto,
+  removeFavorites,
 } = userSlice.actions;
 export default userSlice.reducer;
