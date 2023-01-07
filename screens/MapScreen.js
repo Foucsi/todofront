@@ -18,6 +18,12 @@ export default function MapScreen() {
   return (
     <View style={styles.container}>
       <MapView
+        initialRegion={{
+          latitude: 48.866667,
+          longitude: 2.333333,
+          latitudeDelta: 20,
+          longitudeDelta: 20,
+        }}
         style={styles.map}
         mapType="hybrid"
         onLongPress={(e) => {
