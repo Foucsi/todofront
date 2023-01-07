@@ -4,17 +4,24 @@ import MapView, { Marker } from "react-native-maps";
 import { useState } from "react";
 
 export default function MapScreen() {
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
-  const [city, setCity] = useState();
+  const [arrayList, setArrayList] = useState([]);
+  const colors = [
+    "green",
+    "red",
+    "purple",
+    "yellow",
+    "tomato",
+    "black",
+    "orange",
+    "white",
+  ];
+  const randomColors = colors[Math.floor(Math.random() * colors.length)];
 
-  const addMarker = (
-    <Marker
-      coordinate={{ latitude: latitude, longitude: longitude }}
-      title={"title"}
-      pinColor="purple"
-    />
-  );
+  const allList = arrayList.map((elmt) => {
+    console.log(elmt);
+    return elmt;
+  });
+
   return (
     <View style={styles.container}>
       <MapView
@@ -27,12 +34,21 @@ export default function MapScreen() {
         style={styles.map}
         mapType="hybrid"
         onLongPress={(e) => {
-          setLongitude(e.nativeEvent.coordinate.longitude);
-          setLatitude(e.nativeEvent.coordinate.latitude);
-          console.log(e.nativeEvent);
+          const { latitude, longitude } = e.nativeEvent.coordinate;
+
+          setArrayList([
+            ...arrayList,
+            <Marker
+              pinColor={randomColors}
+              coordinate={{
+                longitude: longitude,
+                latitude: latitude,
+              }}
+            />,
+          ]);
         }}
       >
-        {addMarker}
+        {allList}
       </MapView>
     </View>
   );
