@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function MapScreen() {
   const [arrayList, setArrayList] = useState([]);
+
   const colors = [
     "green",
     "red",
@@ -17,10 +18,13 @@ export default function MapScreen() {
   ];
   const randomColors = colors[Math.floor(Math.random() * colors.length)];
 
-  const allList = arrayList.map((elmt) => {
-    console.log(elmt);
-    return elmt;
-  });
+  const allList = arrayList.map((elmt, index) => (
+    <Marker
+      key={index}
+      pinColor={colors[index % colors.length]}
+      coordinate={{ longitude: elmt.longitude, latitude: elmt.latitude }}
+    />
+  ));
 
   return (
     <View style={styles.container}>
@@ -36,16 +40,7 @@ export default function MapScreen() {
         onLongPress={(e) => {
           const { latitude, longitude } = e.nativeEvent.coordinate;
 
-          setArrayList([
-            ...arrayList,
-            <Marker
-              pinColor={randomColors}
-              coordinate={{
-                longitude: longitude,
-                latitude: latitude,
-              }}
-            />,
-          ]);
+          setArrayList([...arrayList, { longitude, latitude }]);
         }}
       >
         {allList}
