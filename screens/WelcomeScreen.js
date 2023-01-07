@@ -87,6 +87,22 @@ export default function WelcomeScreen({ navigation }) {
 
           <Text style={{ color: "#fff" }}>{numberFavorites}</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("mapScreen")}
+          style={{
+            width: "100%",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
+          <View
+            style={{ width: 200, flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={{ color: "#fff", marginLeft: 10 }}>Map Screen</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
